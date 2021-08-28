@@ -48,7 +48,7 @@ export ENV
 # Create a directory for the env repository
 sudo mkdir -p "$ENV"
 cd "$ENV" || exit
-sudo touch .env
+# sudo touch .env
 
 # Create a directory for the git repository
 sudo mkdir -p "$GIT"
@@ -114,11 +114,28 @@ mv \$TMP \$WWW
 
 # Do stuff like starting docker
 cd \$WWW || exit
-# docker-compose up -d --build
+# Export .env file
+set -o allexport; source .env; set +o allexport
+# Start PM2 server instance
 pm2 start build/index.js --name $1
+
+# Start Caddyserver
+caddy start --config ${ENV}Caddyfile
 
 EOF
 
 # make it executable
 sudo chmod +x post-receive
 
+# Write Caddyfile
+cd "$DIR_ENV" || exit
+
+sudo touch Caddyfile
+
+sudo tee Caddyfile <<EOF
+localhost:$2 {
+  encode gzip zstd
+  reverse_proxy 127.0.0.1:$2
+}
+
+EOF

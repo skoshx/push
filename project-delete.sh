@@ -19,14 +19,14 @@ DIR_GIT="/srv/$1/git/"
 DIR_ENV="/srv/$1/env/"
 
 function dir_delete() {
-    sudo rm -rf "$1"
+  sudo rm -rf "$1"
 }
 
 if [ $# -eq 0 ]; then
-    echo 'No project name provided (mandatory)'
-    exit 1
+  echo 'No project name provided (mandatory)'
+  exit 1
 else
-    echo "- Project name:" "$1"
+  echo "- Project name:" "$1"
 fi
 
 GIT=$DIR_GIT$1.git

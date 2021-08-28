@@ -40,3 +40,10 @@ git remote add deploy ssh://<your-name>@<your-ip>/srv/git/<your-app>.git/
 # Push & deploy
 git push deploy master
 ```
+
+##### TODO
+
+* Write a general bash script that installs everything we need -> Postgres, Caddyserver, Node, Sets up firewalls
+* Make it so that it writes server blocks to Caddyfile
+* Figure out self-hosting Plausible: https://plausible.io/docs/self-hosting#1-clone-the-hosting-repo
+* https://www.digitalocean.com/community/questions/setting-up-multiple-nodejs-applications-using-nginx-vitual-hosts
