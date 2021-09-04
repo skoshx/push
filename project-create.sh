@@ -120,7 +120,8 @@ set -o allexport; source .env; set +o allexport
 pm2 start build/index.js --name $1
 
 # Start Caddyserver
-caddy start --config ${ENV}Caddyfile
+# caddy start --config ${ENV}Caddyfile
+sudo systemctl reload caddy
 
 EOF
 
