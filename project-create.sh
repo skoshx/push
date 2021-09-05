@@ -129,14 +129,17 @@ EOF
 sudo chmod +x post-receive
 
 # Write Caddyfile
-cd "$DIR_ENV" || exit
+# cd "$DIR_ENV" || exit
+cd /etc/caddy || exit
 
-sudo touch Caddyfile
+# sudo rm Caddyfile
+# sudo touch Caddyfile
 
 sudo tee Caddyfile <<EOF
 localhost:$2 {
   encode gzip zstd
   reverse_proxy 127.0.0.1:$2
+  # email youremail@example.com
 }
 
 EOF
