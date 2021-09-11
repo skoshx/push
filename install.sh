@@ -23,6 +23,18 @@ printf "Installing PostgreSQL…\n"
 sudo apt update
 sudo apt install postgresql postgresql-contrib -y
 
+printf "Setting up PostgreSQL…\n"
+
+read -p "Postgres account username: " username
+sudo -u postgres createuser $username
+read -p "Postgres database name: " dbname
+sudo -u postgres createdb $dbname
+read -sp "Postgres password: " password
+
+sudo -u postgres psql
+alter user $username with encrypted password $password;
+grant all privileges on database $dbname to $username;
+
 printf "Installing Caddyserver…\n"
 
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
