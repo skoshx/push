@@ -31,9 +31,24 @@ read -p "Postgres database name: " dbname
 sudo -u postgres createdb $dbname
 read -sp "Postgres password: " password
 
-sudo -u postgres psql
-alter user $username with encrypted password $password;
-grant all privileges on database $dbname to $username;
+export PGPASSWORD=$password; sudo -u postgres psql -h 'localhost' -U $username -d $dbname -c 'alter user $username with encrypted password $password;'
+export PGPASSWORD=$password; sudo -u postgres psql -h 'localhost' -U $username -d $dbname -c 'grant all privileges on database $dbname to $username;'
+#alter user $username with encrypted password $password;
+#grant all privileges on database $dbname to $username;
+
+printf "Writing .env file…\n"
+
+mkdir -p /srv/env || exit
+
+sudo tee /srv/env/.env << EOF
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=${name}
+DB_PASSWORD=${password}
+DB_NAME=${dbname}
+
+EOF
+
 
 printf "Installing Caddyserver…\n"
 
@@ -50,4 +65,4 @@ sudo ufw default allow outgoing
 sudo ufw allow ssh
 sudo ufw allow 80
 sudo ufw allow 443
-sudo ufw enable -y
+sudo ufw enable

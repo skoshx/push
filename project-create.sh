@@ -135,7 +135,7 @@ cd /etc/caddy || exit
 # sudo rm Caddyfile
 # sudo touch Caddyfile
 
-sudo tee Caddyfile <<EOF
+sudo tee -a Caddyfile <<EOF
 localhost:$2 {
   encode gzip zstd
   reverse_proxy 127.0.0.1:$2
