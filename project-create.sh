@@ -116,7 +116,6 @@ mkdir -p \$WWW
 shopt -s dotglob
 mv \$TMP/* \$WWW
 # Edit .env file
-# echo "PORT=\"$(($3+1))\"" >> \$WWW/.env
 echo "PORT=\"$3\"" >> \$WWW/.env
 
 # Do stuff like starting docker
