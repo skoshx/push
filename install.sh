@@ -6,6 +6,10 @@ curl -sL https://deb.nodesource.com/setup_16.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
 sudo apt-get install -y nodejs
 
+printf "Installing Yarn…\n"
+
+npm install --global yarn
+
 printf "Installing PM2…\n"
 
 npm install pm2@latest -g
@@ -41,11 +45,11 @@ printf "Writing .env file…\n"
 mkdir -p /srv/env || exit
 
 sudo tee /srv/env/.env << EOF
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=${name}
-DB_PASSWORD=${password}
-DB_NAME=${dbname}
+DB_HOST="localhost"
+DB_PORT="5432"
+DB_USERNAME="${username}"
+DB_PASSWORD="${password}"
+DB_NAME="${dbname}"
 
 EOF
 

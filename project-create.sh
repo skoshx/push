@@ -23,11 +23,15 @@ DIR_WWW="/srv/www/"
 DIR_GIT="/srv/git/"
 DIR_ENV="/srv/env/"
 
-if [ $# -eq 0 ]; then
+if [ $# -lt 3 ]; then
 	echo 'No project name provided (mandatory)'
+  echo 'Please provide a project name, domain & a port'
+  echo 'eg. bash project-create.sh skosh skoshx.com 3001'
 	exit 1
 else
 	echo "- Project name:" "$1"
+  echo "- Project domain:" "$2"
+  echo "- Project port:" "$3"
 fi
 
 GIT=$DIR_GIT$1.git
@@ -48,7 +52,7 @@ export ENV
 # Create a directory for the env repository
 sudo mkdir -p "$ENV"
 cd "$ENV" || exit
-# sudo touch .env
+cp ../.env . || exit
 
 # Create a directory for the git repository
 sudo mkdir -p "$GIT"
@@ -99,25 +103,28 @@ git --work-tree=\$TMP --git-dir=\$GIT checkout -f
 # Copy the env variable to the temporary directory
 cp -a \$ENV/. \$TMP
 
-# Do stuffs, like npm install
+# Do stuffs, like yarn install
 cd \$TMP || exit
-npm install
-npm run build
+yarn install
+yarn build
 
 # Replace the content of the production directory
 # with the temporary directory
 cd / || exit
 rm -rf \$WWW
 mkdir -p \$WWW
-mv \$TMP \$WWW
-# mv \$TMP \$WWW
+shopt -s dotglob
+mv \$TMP/* \$WWW
+# Edit .env file
+# echo "PORT=\"$(($3+1))\"" >> \$WWW/.env
+echo "PORT=\"$3\"" >> \$WWW/.env
 
 # Do stuff like starting docker
 cd \$WWW || exit
 # Export .env file
 set -o allexport; source .env; set +o allexport
 # Start PM2 server instance
-pm2 start build/index.js --name $1
+pm2 delete $1 2> /dev/null && pm2 start build/index.js --name $1
 
 # Start Caddyserver
 # caddy start --config ${ENV}Caddyfile
@@ -136,9 +143,9 @@ cd /etc/caddy || exit
 # sudo touch Caddyfile
 
 sudo tee -a Caddyfile <<EOF
-localhost:$2 {
+$2 {
   encode gzip zstd
-  reverse_proxy 127.0.0.1:$2
+  reverse_proxy 127.0.0.1:$3
   # email youremail@example.com
 }
 
