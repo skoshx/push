@@ -53,6 +53,7 @@ DB_NAME="${dbname}"
 
 EOF
 
+echo "CA_CERT='`cat /etc/ssl/certs/ssl-cert-snakeoil.pem`'" >> /srv/env/.env
 
 printf "Installing Caddyserver…\n"
 

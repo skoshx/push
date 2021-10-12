@@ -123,6 +123,7 @@ cd \$WWW || exit
 # Export .env file
 set -o allexport; source .env; set +o allexport
 # Start PM2 server instance
+pm2 flush $1 2> /dev/null
 pm2 delete $1 2> /dev/null && pm2 start build/index.js --name $1
 
 # Start Caddyserver
