@@ -127,7 +127,6 @@ pm2 flush $1 2> /dev/null
 pm2 delete $1 2> /dev/null && pm2 start build/index.js --name $1
 
 # Start Caddyserver
-# caddy start --config ${ENV}Caddyfile
 sudo systemctl reload caddy
 
 EOF
@@ -136,11 +135,7 @@ EOF
 sudo chmod +x post-receive
 
 # Write Caddyfile
-# cd "$DIR_ENV" || exit
 cd /etc/caddy || exit
-
-# sudo rm Caddyfile
-# sudo touch Caddyfile
 
 sudo tee -a Caddyfile <<EOF
 $2 {

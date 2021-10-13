@@ -29,14 +29,26 @@ sudo apt install postgresql postgresql-contrib -y
 
 printf "Setting up PostgreSQL…\n"
 
-read -p "Postgres account username: " username
-sudo -u postgres createuser $username
 read -p "Postgres database name: " dbname
 sudo -u postgres createdb $dbname
-read -sp "Postgres password: " password
+# read -sp "Postgres password: " password
 
-export PGPASSWORD=$password; sudo -u postgres psql -h 'localhost' -U $username -d $dbname -c 'alter user $username with encrypted password $password;'
-export PGPASSWORD=$password; sudo -u postgres psql -h 'localhost' -U $username -d $dbname -c 'grant all privileges on database $dbname to $username;'
+printf "Generating postgres password…\n"
+password=`head -c16 /dev/urandom | md5sum | tr -d ' -'`
+
+# make .pgpass file
+sudo -su postgres
+tee ~/.pgpass << EOF
+localhost:5432:db:postgres:${password}
+localhost:5432:*:postgres:${password}
+EOF
+
+# fix permissions
+chmod 0600 ~/.pgpass
+exit
+
+export PGPASSWORD=$password; sudo -u postgres psql -h 'localhost' -U postgres -d $dbname -c 'alter user $username with encrypted password $password;'
+export PGPASSWORD=$password; sudo -u postgres psql -h 'localhost' -U postgres -d $dbname -c 'grant all privileges on database $dbname to $username;'
 #alter user $username with encrypted password $password;
 #grant all privileges on database $dbname to $username;
 
