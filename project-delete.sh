@@ -13,10 +13,15 @@
 # - $WWW: a directory for the actual production files
 # - $ENV: a directory for the env variables
 
-DIR_TMP="/srv/$1/tmp/"
-DIR_WWW="/srv/$1/www/"
-DIR_GIT="/srv/$1/git/"
-DIR_ENV="/srv/$1/env/"
+# DIR_TMP="/srv/$1/tmp/"
+# DIR_WWW="/srv/$1/www/"
+# DIR_GIT="/srv/$1/git/"
+# DIR_ENV="/srv/$1/env/"
+
+DIR_TMP="/srv/tmp/$1"
+DIR_WWW="/srv/www/$1"
+DIR_GIT="/srv/git/$1"
+DIR_ENV="/srv/env/$1"
 
 function dir_delete() {
   sudo rm -rf "$1"
