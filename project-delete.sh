@@ -18,10 +18,10 @@
 # DIR_GIT="/srv/$1/git/"
 # DIR_ENV="/srv/$1/env/"
 
-DIR_TMP="/srv/tmp/$1"
-DIR_WWW="/srv/www/$1"
-DIR_GIT="/srv/git/$1"
-DIR_ENV="/srv/env/$1"
+DIR_TMP="/srv/tmp/"
+DIR_WWW="/srv/www/"
+DIR_GIT="/srv/git/"
+DIR_ENV="/srv/env/"
 
 function dir_delete() {
   sudo rm -rf "$1"
