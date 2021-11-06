@@ -30,7 +30,7 @@ git remote add deploy ssh://<your-name>@<your-ip>/srv/git/<your-app>.git/
 * 6) Push to deploy!
 ```bash
 # Push & deploy
-git push deploy master
+git push deploy main
 ```
 
 ##### Troubleshooting
