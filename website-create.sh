@@ -123,9 +123,8 @@ cd \$WWW || exit
 set -o allexport; source .env; set +o allexport
 # Start PM2 server instance
 pm2 flush $1 2> /dev/null
-# pm2 delete $1 2> /dev/null && pm2 start build/index.js --name $1
-pm2 delete $1 2> /dev/null && pm2 start npm --name $1 -- start
-# alternatively: pm2 start npm --name $1 -- start
+pm2 delete $1 2> /dev/null
+pm2 start npm --name $1 -- start
 
 # Start Caddyserver
 sudo systemctl reload caddy
