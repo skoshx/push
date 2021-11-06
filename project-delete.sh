@@ -49,3 +49,10 @@ dir_delete "$ENV"
 dir_delete "$WWW"
 dir_delete "$TMP"
 
+echo 'Deleting PM2 process entry.'
+pm2 delete $1 2> /dev/null
+printf 'Done!\n\n'
+
+echo 'Remember to remove the Caddyfile entry in /etc/caddy/Caddyfile'
+echo 'if the project was a website, then run "sudo systemctl reload caddy"'
+

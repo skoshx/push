@@ -24,8 +24,7 @@ DIR_GIT="/srv/git/"
 DIR_ENV="/srv/env/"
 
 if [ $# -lt 3 ]; then
-	echo 'No project name provided (mandatory)'
-  echo 'Please provide a project name, domain & a port'
+  echo 'Please provide a project type, name, (domain) & a port'
   echo 'eg. bash project-create.sh skosh skoshx.com 3001'
 	exit 1
 else
@@ -147,3 +146,4 @@ $2 {
 }
 
 EOF
+
