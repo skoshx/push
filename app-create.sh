@@ -103,8 +103,8 @@ cp -a \$ENV/. \$TMP
 
 # Do stuffs, like yarn install
 cd \$TMP || exit
-yarn install
-yarn build
+yarn install || exit
+yarn build || exit
 
 # Replace the content of the production directory
 # with the temporary directory
