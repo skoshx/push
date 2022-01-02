@@ -39,7 +39,7 @@ These push to scripts assume you are using a GitHub repository as a main reposit
 assumes your default branch is called "main" instead of "master". If you have a repository with
 the default branch being called "master" you need to change this in your `post-receive` Git hook.
 
-````bash
+```bash
 vim /srv/git/<your project>/hooks/post-receive
 
 # replace this line:
